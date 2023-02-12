@@ -7,15 +7,15 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../app_colors.dart';
 import '../../main.dart';
 import '../widgets/utils.dart';
-import 'forgot_page.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
+
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<SignUpPage> createState() => _SignUpState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _SignUpState extends State<SignUpPage> {
   final formKey = GlobalKey<FormState>();
   late TextEditingController emailController;
   late TextEditingController passwordController;
@@ -35,27 +35,27 @@ class _LoginPageState extends State<LoginPage> {
       resizeToAvoidBottomInset: false,
       backgroundColor: raspberry,
       body: SingleChildScrollView(
-        child: Form(
-          key: formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Image.asset(
-                'assets/images/logo2.png',
-                scale: 3,
-                width: double.infinity,
-              ),
-              Container(
-                height: 535,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: beige,
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(50),
-                    topRight: Radius.circular(50),
-                  ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Image.asset(
+              'assets/images/logo2.png',
+              scale: 3,
+              width: double.infinity,
+            ),
+            Container(
+              height: 535,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: beige,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(50),
+                  topRight: Radius.circular(50),
                 ),
+              ),
+              child: Form(
+                key: formKey,
                 child: Column(
                   children: [
                     const SizedBox(
@@ -63,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     Center(
                       child: Text(
-                        "LOG IN",
+                        "SIGN UP",
                         style: GoogleFonts.poppins(
                             fontSize: 35,
                             fontWeight: FontWeight.bold,
@@ -78,7 +78,6 @@ class _LoginPageState extends State<LoginPage> {
                       child: TextFormField(
                         controller: emailController = TextEditingController(),
                         cursorColor: lion,
-                        textInputAction: TextInputAction.next,
                         decoration: InputDecoration(
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: lion),
@@ -105,7 +104,6 @@ class _LoginPageState extends State<LoginPage> {
                         controller: passwordController =
                             TextEditingController(),
                         cursorColor: lion,
-                        textInputAction: TextInputAction.done,
                         decoration: InputDecoration(
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: lion),
@@ -131,77 +129,56 @@ class _LoginPageState extends State<LoginPage> {
                     Center(
                       child: RawMaterialButton(
                         onPressed: () {
-                          _login();
+                          _signUp();
                         },
                         fillColor: lion,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50),
                         ),
                         child: Text(
-                          "Log In",
+                          "Sign Up",
                           style: GoogleFonts.poppins(
                               color: beige, fontWeight: FontWeight.bold),
                         ),
                       ),
                     ),
                     const SizedBox(
-                      height: 10,
-                    ),
-                    GestureDetector(
-                      child: Text(
-                        "Forgot password?",
-                        style: GoogleFonts.poppins(
-                          decoration: TextDecoration.underline,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: lion,
-                        ),
-                      ),
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const ForgotPasswordPage(),
-                          ),
-                        );
-                      },
-                    ),
-                    const SizedBox(
-                      height: 10,
+                      height: 30,
                     ),
                     Center(
                       child: RichText(
                         text: TextSpan(
-                            style: GoogleFonts.poppins(
-                              fontSize: 14,
-                              color: lion,
+                          style: GoogleFonts.poppins(
+                            fontSize: 14,
+                            color: lion,
+                          ),
+                          children: <TextSpan>[
+                            const TextSpan(text: "Already have an account? "),
+                            TextSpan(
+                              text: "LOG IN",
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.bold,
+                                  decoration: TextDecoration.underline),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  Navigator.pushNamed(context, "/login");
+                                },
                             ),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: "Don't have an account? ",
-                                  style: GoogleFonts.poppins()),
-                              TextSpan(
-                                  text: "SIGN UP",
-                                  style: GoogleFonts.poppins(
-                                      decoration: TextDecoration.underline,
-                                      fontWeight: FontWeight.bold),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      Navigator.pushNamed(context, "/signup");
-                                    })
-                            ]),
+                          ],
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     ));
   }
 
-  Future _login() async {
+  Future _signUp() async {
     final isValid = formKey.currentState!.validate();
     if (!isValid) return;
 
@@ -215,7 +192,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );

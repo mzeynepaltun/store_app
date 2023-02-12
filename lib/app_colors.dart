@@ -1,8 +1,8 @@
-import 'package:snippet_coder_utils/hex_color.dart';
+import 'package:flutter/material.dart';
 
-var chocolate = HexColor("#432818");
-var lion = HexColor("#99582A");
-var latte = HexColor("#BB9457");
-var raspberry = HexColor("#6F1D1B");
-var beige = HexColor("#EDD0C8");
-// var beige = HexColor("#FFE6A7");
+var chocolate = const Color(0xFF432818);
+var lion = const Color(0xFF99582A);
+var latte = const Color(0xFFBB9457);
+var raspberry = const Color(0xFF6F1D1B);
+var beige = const Color(0xFFEDD0C8);
+// var beige = const Color(0xFFFFE6A7);

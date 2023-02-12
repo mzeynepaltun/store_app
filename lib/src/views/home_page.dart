@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:store_app/app_colors.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+import '../../app_colors.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,6 +18,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser!;
+    final mail = user.email;
+
     return SafeArea(
         child: Scaffold(
       backgroundColor: raspberry,
@@ -22,12 +28,27 @@ class _HomePageState extends State<HomePage> {
         children: [
           RawMaterialButton(
             onPressed: () {
-              goto();
+              FirebaseAuth.instance.signOut();
             },
             fillColor: chocolate,
             child: Text(
-              "Login",
+              "Log Out",
               style: TextStyle(color: latte),
+            ),
+          ),
+          Center(
+            child: Text(
+              "Signed in as",
+              style: GoogleFonts.poppins(fontSize: 16),
+            ),
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          Center(
+            child: Text(
+              mail!,
+              style: GoogleFonts.poppins(fontSize: 20),
             ),
           )
         ],
