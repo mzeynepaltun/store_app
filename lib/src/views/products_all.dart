@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:store_app/app_colors.dart';
+import 'package:store_app/src/manager/cart_manager.dart';
 import 'package:store_app/src/services/api_service.dart';
 import '../models/product_model.dart';
 
@@ -34,7 +34,9 @@ class AllProducts extends StatelessWidget {
                           width: 50,
                         ),
                         subtitle: Text("\$${product.price}"),
-                        onTap: () {},
+                        onTap: () {
+                          CartManager().addToCart(product);
+                        },
                       );
                     },
                   );

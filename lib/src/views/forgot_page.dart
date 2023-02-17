@@ -4,8 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:store_app/app_colors.dart';
-
-import '../widgets/utils.dart';
+import 'package:store_app/src/widgets/utils.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({super.key});
@@ -113,7 +112,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       await FirebaseAuth.instance
           .sendPasswordResetEmail(email: emailController.text.trim());
       Utils.showSnackBar("Password reset e-mail has been sent.");
-      Navigator.of(context).popUntil((route) => route.isFirst);
+      if (mounted) {
+        Navigator.of(context).popUntil((route) => route.isFirst);
+      }
     } on FirebaseAuthException catch (e) {
       debugPrint(e.toString());
 

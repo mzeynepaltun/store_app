@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:store_app/src/manager/cart_manager.dart';
 import 'products_all.dart';
 import 'products_category.dart';
 import '../../app_colors.dart';
@@ -28,6 +29,16 @@ class _HomePageState extends State<HomePage> {
                   Navigator.pushNamed(context, "/cart");
                 }),
             centerTitle: true,
+            actions: [
+              IconButton(
+                  icon: Icon(
+                    Icons.delete,
+                    color: beige,
+                  ),
+                  onPressed: () {
+                    CartManager().clearCart();
+                  })
+            ],
             title: Text(
               "Welcome",
               style: GoogleFonts.poppins(color: beige),
