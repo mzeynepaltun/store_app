@@ -1,60 +1,60 @@
-import 'dart:convert';
+// import 'dart:convert';
 
-List<CartsModel> cartsModelFromJson(String str) =>
-    List<CartsModel>.from(json.decode(str).map((x) => CartsModel.fromJson(x)));
+// List<CartsModel> cartsModelFromJson(String str) =>
+//     List<CartsModel>.from(json.decode(str).map((x) => CartsModel.fromJson(x)));
 
-String cartsModelToJson(List<CartsModel> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+// String cartsModelToJson(List<CartsModel> data) =>
+//     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class CartsModel {
-  CartsModel({
-    required this.id,
-    required this.userId,
-    required this.date,
-    required this.products,
-    required this.v,
-  });
+// class CartsModel {
+//   CartsModel({
+//     required this.id,
+//     required this.userId,
+//     required this.date,
+//     required this.products,
+//     required this.v,
+//   });
 
-  final int id;
-  final int userId;
-  final DateTime date;
-  final List<Product> products;
-  final int v;
+//   final int id;
+//   final int userId;
+//   final DateTime date;
+//   final List<Product> products;
+//   final int v;
 
-  factory CartsModel.fromJson(Map<String, dynamic> json) => CartsModel(
-        id: json["id"],
-        userId: json["userId"],
-        date: DateTime.parse(json["date"]),
-        products: List<Product>.from(
-            json["products"].map((x) => Product.fromJson(x))),
-        v: json["__v"],
-      );
+//   factory CartsModel.fromJson(Map<String, dynamic> json) => CartsModel(
+//         id: json["id"],
+//         userId: json["userId"],
+//         date: DateTime.parse(json["date"]),
+//         products: List<Product>.from(
+//             json["products"].map((x) => Product.fromJson(x))),
+//         v: json["__v"],
+//       );
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "userId": userId,
-        "date": date.toIso8601String(),
-        "products": List<dynamic>.from(products.map((x) => x.toJson())),
-        "__v": v,
-      };
-}
+//   Map<String, dynamic> toJson() => {
+//         "id": id,
+//         "userId": userId,
+//         "date": date.toIso8601String(),
+//         "products": List<dynamic>.from(products.map((x) => x.toJson())),
+//         "__v": v,
+//       };
+// }
 
-class Product {
-  Product({
-    required this.productId,
-    required this.quantity,
-  });
+// class Product {
+//   Product({
+//     required this.productId,
+//     required this.quantity,
+//   });
 
-  final int productId;
-  final int quantity;
+//   final int productId;
+//   final int quantity;
 
-  factory Product.fromJson(Map<String, dynamic> json) => Product(
-        productId: json["productId"],
-        quantity: json["quantity"],
-      );
+//   factory Product.fromJson(Map<String, dynamic> json) => Product(
+//         productId: json["productId"],
+//         quantity: json["quantity"],
+//       );
 
-  Map<String, dynamic> toJson() => {
-        "productId": productId,
-        "quantity": quantity,
-      };
-}
+//   Map<String, dynamic> toJson() => {
+//         "productId": productId,
+//         "quantity": quantity,
+//       };
+// }
