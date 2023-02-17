@@ -3,9 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../../app_colors.dart';
 import '../../main.dart';
+import '../widgets/curve_painter.dart';
 import '../widgets/utils.dart';
 import 'forgot_page.dart';
 
@@ -17,8 +17,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final formKey = GlobalKey<FormState>();
-  late TextEditingController emailController;
-  late TextEditingController passwordController;
+  late TextEditingController emailController = TextEditingController();
+  late TextEditingController passwordController = TextEditingController();
 
   @override
   void dispose() {
@@ -33,50 +33,33 @@ class _LoginPageState extends State<LoginPage> {
     return SafeArea(
         child: Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: raspberry,
+      backgroundColor: beige,
       body: SingleChildScrollView(
         child: Form(
           key: formKey,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Image.asset(
-                'assets/images/logo2.png',
-                scale: 3,
-                width: double.infinity,
+            children: <Widget>[
+              CustomPaint(
+                painter: CurvePainter(),
+                child: Container(height: 150),
               ),
-              Container(
-                height: 535,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: beige,
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(50),
-                    topRight: Radius.circular(50),
-                  ),
-                ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 50, 20, 0),
                 child: Column(
-                  children: [
-                    const SizedBox(
-                      height: 20,
-                    ),
+                  children: <Widget>[
                     Center(
                       child: Text(
                         "LOG IN",
                         style: GoogleFonts.poppins(
-                            fontSize: 35,
-                            fontWeight: FontWeight.bold,
-                            color: lion),
+                            color: lion,
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 20,
                     ),
                     Padding(
                       padding: const EdgeInsets.only(right: 20, left: 20),
                       child: TextFormField(
-                        controller: emailController = TextEditingController(),
+                        controller: emailController,
                         cursorColor: lion,
                         textInputAction: TextInputAction.next,
                         decoration: InputDecoration(
@@ -102,8 +85,7 @@ class _LoginPageState extends State<LoginPage> {
                       padding: const EdgeInsets.only(right: 20, left: 20),
                       child: TextFormField(
                         obscureText: true,
-                        controller: passwordController =
-                            TextEditingController(),
+                        controller: passwordController,
                         cursorColor: lion,
                         textInputAction: TextInputAction.done,
                         decoration: InputDecoration(
@@ -125,9 +107,7 @@ class _LoginPageState extends State<LoginPage> {
                                 : null,
                       ),
                     ),
-                    const SizedBox(
-                      height: 40,
-                    ),
+                    const SizedBox(height: 20),
                     Center(
                       child: RawMaterialButton(
                         onPressed: () {
@@ -171,24 +151,26 @@ class _LoginPageState extends State<LoginPage> {
                     Center(
                       child: RichText(
                         text: TextSpan(
-                            style: GoogleFonts.poppins(
-                              fontSize: 14,
-                              color: lion,
+                          style: GoogleFonts.poppins(
+                            fontSize: 14,
+                            color: lion,
+                          ),
+                          children: <TextSpan>[
+                            TextSpan(
+                                text: "Don't have an account? ",
+                                style: GoogleFonts.poppins()),
+                            TextSpan(
+                              text: "SIGN UP",
+                              style: GoogleFonts.poppins(
+                                  decoration: TextDecoration.underline,
+                                  fontWeight: FontWeight.bold),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  Navigator.pushNamed(context, "/signup");
+                                },
                             ),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: "Don't have an account? ",
-                                  style: GoogleFonts.poppins()),
-                              TextSpan(
-                                  text: "SIGN UP",
-                                  style: GoogleFonts.poppins(
-                                      decoration: TextDecoration.underline,
-                                      fontWeight: FontWeight.bold),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      Navigator.pushNamed(context, "/signup");
-                                    })
-                            ]),
+                          ],
+                        ),
                       ),
                     ),
                   ],

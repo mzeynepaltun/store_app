@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../app_colors.dart';
 import '../../main.dart';
+import '../widgets/curve_painter.dart';
 import '../widgets/utils.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -33,143 +34,128 @@ class _SignUpState extends State<SignUpPage> {
     return SafeArea(
         child: Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: raspberry,
+      backgroundColor: beige,
       body: SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Image.asset(
-              'assets/images/logo2.png',
-              scale: 3,
-              width: double.infinity,
+          children: <Widget>[
+            CustomPaint(
+              painter: CurvePainter(),
+              child: Container(height: 150),
             ),
-            Container(
-              height: 535,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: beige,
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(50),
-                  topRight: Radius.circular(50),
-                ),
-              ),
-              child: Form(
-                key: formKey,
-                child: Column(
-                  children: [
-                    const SizedBox(
-                      height: 20,
+            Form(
+              key: formKey,
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Center(
+                    child: Text(
+                      "SIGN UP",
+                      style: GoogleFonts.poppins(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: lion),
                     ),
-                    Center(
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 20, left: 20),
+                    child: TextFormField(
+                      controller: emailController = TextEditingController(),
+                      cursorColor: lion,
+                      decoration: InputDecoration(
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: lion),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: lion),
+                        ),
+                        label: Text(
+                          "E-Mail",
+                          style: GoogleFonts.poppins(color: lion),
+                        ),
+                      ),
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (email) =>
+                          email != null && !EmailValidator.validate(email)
+                              ? "Enter a valid e-mail"
+                              : null,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 20, left: 20),
+                    child: TextFormField(
+                      obscureText: true,
+                      controller: passwordController = TextEditingController(),
+                      cursorColor: lion,
+                      decoration: InputDecoration(
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: lion),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: lion),
+                        ),
+                        label: Text(
+                          "Password",
+                          style: GoogleFonts.poppins(color: lion),
+                        ),
+                      ),
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (password) =>
+                          password != null && password.length < 6
+                              ? "Enter at least 6 characters"
+                              : null,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  Center(
+                    child: RawMaterialButton(
+                      onPressed: () {
+                        _signUp();
+                      },
+                      fillColor: lion,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
                       child: Text(
-                        "SIGN UP",
+                        "Sign Up",
                         style: GoogleFonts.poppins(
-                            fontSize: 35,
-                            fontWeight: FontWeight.bold,
-                            color: lion),
+                            color: beige, fontWeight: FontWeight.bold),
                       ),
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 20, left: 20),
-                      child: TextFormField(
-                        controller: emailController = TextEditingController(),
-                        cursorColor: lion,
-                        decoration: InputDecoration(
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: lion),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: lion),
-                          ),
-                          label: Text(
-                            "E-Mail",
-                            style: GoogleFonts.poppins(color: lion),
-                          ),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Center(
+                    child: RichText(
+                      text: TextSpan(
+                        style: GoogleFonts.poppins(
+                          fontSize: 14,
+                          color: lion,
                         ),
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: (email) =>
-                            email != null && !EmailValidator.validate(email)
-                                ? "Enter a valid e-mail"
-                                : null,
+                        children: <TextSpan>[
+                          const TextSpan(text: "Already have an account? "),
+                          TextSpan(
+                            text: "LOG IN",
+                            style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.bold,
+                                decoration: TextDecoration.underline),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                Navigator.pushNamed(context, "/login");
+                              },
+                          ),
+                        ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 20, left: 20),
-                      child: TextFormField(
-                        obscureText: true,
-                        controller: passwordController =
-                            TextEditingController(),
-                        cursorColor: lion,
-                        decoration: InputDecoration(
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: lion),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: lion),
-                          ),
-                          label: Text(
-                            "Password",
-                            style: GoogleFonts.poppins(color: lion),
-                          ),
-                        ),
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: (password) =>
-                            password != null && password.length < 6
-                                ? "Enter at least 6 characters"
-                                : null,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 40,
-                    ),
-                    Center(
-                      child: RawMaterialButton(
-                        onPressed: () {
-                          _signUp();
-                        },
-                        fillColor: lion,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                        child: Text(
-                          "Sign Up",
-                          style: GoogleFonts.poppins(
-                              color: beige, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Center(
-                      child: RichText(
-                        text: TextSpan(
-                          style: GoogleFonts.poppins(
-                            fontSize: 14,
-                            color: lion,
-                          ),
-                          children: <TextSpan>[
-                            const TextSpan(text: "Already have an account? "),
-                            TextSpan(
-                              text: "LOG IN",
-                              style: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.bold,
-                                  decoration: TextDecoration.underline),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  Navigator.pushNamed(context, "/login");
-                                },
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ],
